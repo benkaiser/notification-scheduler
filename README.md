@@ -35,3 +35,5 @@ fetch(`${endpoint}/vapid`)
   });
 });
 ```
+
+Note: This service comes with absolutely no guarantees, it might go down, notifications may stop being delivered, etc. If you would like to rely on this in a production environment, I'd advise you to spin up your own server (or rely on a more dedicated notification solution for your scenario).
