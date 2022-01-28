@@ -1,0 +1,18 @@
+mongo:
+  image: mongo
+web:
+  build: .
+  command: npm run dev
+  dockerfile: Dockerfile.local
+  environment:
+    PORT: 8777
+    ENV: development
+    APP_URL: 'http://localhost:8777'
+    MONGO_URL: 'mongodb://mongo:27017/notifications'
+  links:
+    - mongo
+  ports:
+    - "8777:8777"
+  volumes:
+    - .:/app
+    - /app/node_modules

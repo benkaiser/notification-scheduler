@@ -1,0 +1,5 @@
+FROM node:16
+RUN mkdir /app
+ADD package.json yarn.lock /app/
+WORKDIR /app
+RUN yarn
