@@ -44,7 +44,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.send('See <a href="https://github.com/benkaiser/notification-scheduer">Notification Scheduler on GitHub</a> for more info')
+  res.send('See <a href="https://github.com/benkaiser/notification-scheduler">Notification Scheduler on GitHub</a> for more info')
 });
 
 app.get('/vapid', (req, res) => {

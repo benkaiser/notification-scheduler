@@ -2,10 +2,10 @@
 
 Becuase the browser lacks a good notification scheduling API... I made a notification server you can use in your static websites.
 
-## To Use
+## How To Create a Recurring Notification
 
 ```javascript
-const endpoint = 'http://localhost:8777';
+const endpoint = 'https://notification.kaiser.lol';
 fetch(`${endpoint}/vapid`)
 .then(response => response.text())
 .then(vapidKey => {
@@ -20,7 +20,7 @@ fetch(`${endpoint}/vapid`)
           method: 'POST',
           body: JSON.stringify({
             subscription: pushSubscription,
-            interval: 'every 1 minutes'
+            interval: '1 day'
           }),
           headers: {
             'Content-Type': 'application/json'
