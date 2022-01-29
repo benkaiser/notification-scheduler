@@ -51,6 +51,21 @@ app.get('/vapid', (req, res) => {
   res.send(process.env.PUBLIC_VAPID_KEY);
 });
 
+app.post('/unsubscribe', (req, res) => {
+  agenda.cancel({ 'data.subscription.endpoint': req.body.endpoint })
+  .then((numCancelled) => {
+    if (numCancelled) {
+      res.send('Job cancelled');
+    } else {
+      res.send('No job found for subscription');
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+    res.status(500).send('Failed to unsubscribe');
+  });
+})
+
 app.post('/subscribe', (req, res) => {
   agenda.create('notify', {
     subscription: req.body.subscription,

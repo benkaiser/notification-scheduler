@@ -1,3 +1,2 @@
-- Add unsubscribe endpoint
 - Add documentation on how to trigger single events
 - Add documentation on how to test instant notifications

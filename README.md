@@ -10,28 +10,44 @@ fetch(`${endpoint}/vapid`)
 .then(response => response.text())
 .then(vapidKey => {
   navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
-    var options = {
-      userVisibleOnly: true,
-      applicationServerKey: vapidKey
-    };
-    serviceWorkerRegistration.pushManager.subscribe(options)
+    serviceWorkerRegistration.pushManager
+    .getSubscription()
     .then((pushSubscription) => {
-        fetch(`${endpoint}/subscribe`, {
+      if (pushSubscription) {
+        return fetch(`${endpoint}/unsubscribe`, {
           method: 'POST',
           body: JSON.stringify({
-            subscription: pushSubscription,
-            interval: '1 day'
+            endpoint: pushSubscription.endpoint
           }),
           headers: {
             'Content-Type': 'application/json'
           }
-        })
-        .then(() => console.log('Push subscription created'))
-        .catch(() => console.log('Failed to create push subscription'));
-      }, function(error) {
-        console.log('Failed to request notification permission')
+        });
       }
-    );
+    }).then(() => {
+      var options = {
+        userVisibleOnly: true,
+        applicationServerKey: vapidKey
+      };
+      serviceWorkerRegistration.pushManager.subscribe(options)
+      .then((pushSubscription) => {
+          fetch(`${endpoint}/subscribe`, {
+            method: 'POST',
+            body: JSON.stringify({
+              subscription: pushSubscription,
+              interval: '1 day'
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(() => console.log('Push subscription created'))
+          .catch(() => console.log('Failed to create push subscription'));
+        }, function(error) {
+          console.log('Failed to request notification permission')
+        }
+      );
+    });
   });
 });
 ```
