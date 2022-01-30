@@ -69,10 +69,11 @@ app.post('/unsubscribe', (req, res) => {
 app.post('/subscribe', (req, res) => {
   agenda.create('notify', {
     subscription: req.body.subscription,
-    payload: req.body.interval,
+    payload: req.body.interval
+  }).repeatEvery(req.body.interval, {
     timezone: req.body.timezone || undefined,
     endDate: req.body.endDate ? new Date(req.body.endDate) : undefined
-  }).repeatEvery(req.body.interval).save();
+  }).save();
   res.send('Subscription created');
 });
 
