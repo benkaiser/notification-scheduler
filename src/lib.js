@@ -1,6 +1,18 @@
 window.notifyCron = (params) => {
   const endpoint = '{{HOST_NAME}}';
-  return fetch(`${endpoint}/vapid`)
+  return (
+    Notification.permission === "granted"
+    ? Promise.resolve()
+    : Notification.requestPermission().then(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        return Promise.resolve();
+      } else {
+        return Promise.reject('Notification permission not granted');
+      }
+    })
+  )
+  .then(() => fetch(`${endpoint}/vapid`))
   .then(response => response.text())
   .then(vapidKey => {
     return navigator.serviceWorker.ready
@@ -37,11 +49,9 @@ window.notifyCron = (params) => {
                 'Content-Type': 'application/json'
               }
             })
-            .then(() => true)
-            .catch(() => false);
+            .then(() => true);
           }, (error) => {
-            console.error(error);
-            return false
+            return Promise.reject(error);
           }
         );
       });
