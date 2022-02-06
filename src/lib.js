@@ -1,4 +1,4 @@
-window.notifyCron = (params) => {
+window.notificationScheduler = (params) => {
   const endpoint = '{{HOST_NAME}}';
   return (
     Notification.permission === "granted"

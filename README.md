@@ -14,13 +14,13 @@ The below code creates a recurring notification at 8am (UTC) daily.
 <script src="https://notification.kaiser.lol/lib.js"></script>
 <script>
   // make sure you have a service worker registered before calling this
-  notifyCron({ interval: '0 8 * * *' }).then(result => console.log('Result: ' + result));
+  notificationScheduler({ interval: '0 8 * * *' }).then(result => console.log('Result: ' + result));
 </script>
 ```
 
 ## API
 
-`notifyCron(params): Promise<boolean>`
+`notificationScheduler(params): Promise<boolean>`
 
 Returns true/false based on success creating a notification.
 
