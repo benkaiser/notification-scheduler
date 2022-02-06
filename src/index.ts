@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { Agenda, Job } from 'agenda';
 import webpush, { PushSubscription } from 'web-push';
+import { readFileSync } from 'fs';
 var Agendash = require("agendash");
 
 require('dotenv').config();
@@ -49,6 +50,13 @@ app.get('/', (req, res) => {
 
 app.get('/vapid', (req, res) => {
   res.send(process.env.PUBLIC_VAPID_KEY);
+});
+
+const template = readFileSync(__dirname + '/../src/lib.js', 'utf8');
+
+app.get('/lib.js', (req, res) => {
+  res.setHeader('content-type', 'application/javascript');
+  res.send(template.replace('{{HOST_NAME}}', req.protocol + '://' + req.headers.host));
 });
 
 app.post('/unsubscribe', (req, res) => {
