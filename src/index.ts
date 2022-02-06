@@ -56,7 +56,7 @@ const template = readFileSync(__dirname + '/../src/lib.js', 'utf8');
 
 app.get('/lib.js', (req, res) => {
   res.setHeader('content-type', 'application/javascript');
-  res.send(template.replace('{{HOST_NAME}}', req.protocol + '://' + req.headers.host));
+  res.send(template.replace('{{HOST_NAME}}', (process.env.ENV === 'development' ? 'http' : 'https') + '://' + req.headers.host));
 });
 
 app.post('/unsubscribe', (req, res) => {
