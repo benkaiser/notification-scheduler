@@ -20,9 +20,9 @@ The below code creates a recurring notification at 8am (UTC) daily.
 
 ## API
 
-`notificationScheduler(params): Promise<boolean>`
+`notificationScheduler(params): Promise<void>`
 
-Returns true/false based on success creating a notification.
+Throws if a subscription was not created successfully.
 
 `params` is an object containing:
 

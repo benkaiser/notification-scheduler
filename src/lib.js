@@ -49,7 +49,7 @@ window.notificationScheduler = (params) => {
                 'Content-Type': 'application/json'
               }
             })
-            .then(() => true);
+            .then(() => { return });
           }, (error) => {
             return Promise.reject(error);
           }
