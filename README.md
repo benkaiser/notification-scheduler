@@ -14,7 +14,12 @@ The below code creates a recurring notification at 8am (UTC) daily.
 <script src="https://notification.kaiser.lol/lib.js"></script>
 <script>
   // make sure you have a service worker registered before calling this
-  notificationScheduler({ interval: '0 8 * * *' }).then(result => console.log('Result: ' + result));
+  notificationScheduler({ interval: '0 8 * * *' })
+  .then(_ => {
+    // notification subscription created
+  }).catch(error => {
+    // failed to set notifications
+  });
 </script>
 ```
 
